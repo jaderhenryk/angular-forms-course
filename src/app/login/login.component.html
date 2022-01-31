@@ -2,22 +2,22 @@
   <mat-card-title>Login</mat-card-title>
   <mat-card-content>
 
-    <form class="login-form data-form">
+    <form class="login-form data-form" #loginForm="ngForm" (ngSubmit)="login(loginForm, $event)">
 
       <mat-form-field>
 
-        <input matInput type="email" name="email"
-               placeholder="Email">
-
+        <input matInput type="email" name="email" placeholder="Email" ngModel #email="ngModel" required email>
+        <mat-error *ngIf="email.errors?.required">Email is mandatory</mat-error>
+        <mat-error *ngIf="email.errors?.email">This is not an valid email</mat-error>
       </mat-form-field>
 
       <mat-form-field>
 
-        <input matInput type="password" placeholder="Password">
+        <input matInput type="password" placeholder="Password" name="password" ngModel required>
 
       </mat-form-field>
 
-      <button mat-raised-button color="primary">
+      <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid">
         Login
       </button>
 
