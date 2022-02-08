@@ -2,22 +2,32 @@
   <mat-card-title>Login</mat-card-title>
   <mat-card-content>
 
-    <form class="login-form data-form">
+    <form class="login-form data-form" #loginForm="ngForm" (ngSubmit)="login(loginForm, $event)">
 
       <mat-form-field>
 
-        <input matInput type="email" name="email"
-               placeholder="Email">
-
+        <input matInput type="email" name="email" placeholder="Email" ngModel #email="ngModel" required email>
+        <mat-error *ngIf="email.errors?.required">Email is mandatory.</mat-error>
+        <mat-error *ngIf="email.errors?.email">This is not an valid email.</mat-error>
       </mat-form-field>
 
       <mat-form-field>
-
-        <input matInput type="password" placeholder="Password">
+        
+        <input matInput type="password" placeholder="Password" name="password" #password="ngModel" ngModel required passwordStrength minlength="6">
+        <mat-error *ngIf="password.errors?.required">Password is mandatory.</mat-error>
 
       </mat-form-field>
+      <ng-container *ngIf="password.errors | onlyOneError: ['minlength', 'passwordStrength'] as error">
+        <div class="field-message" *ngIf="error?.passwordStrength">
+          Your password must have lower case, upper case and numeric characters.
+        </div>
+        <div class="field-message" *ngIf="error.minlength">
+          Your password must have minimun {{error.minlength.requiredLength}} chars, 
+          but it only has {{error.minlength.actualLength}}.
+        </div>
+      </ng-container>
 
-      <button mat-raised-button color="primary">
+      <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid">
         Login
       </button>
 
