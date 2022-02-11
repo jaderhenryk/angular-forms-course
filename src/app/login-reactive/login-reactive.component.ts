@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { createPasswordStrengthValidator } from '../validators/password-strength.validator';
 
 
 @Component({
@@ -9,22 +10,37 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginReactiveComponent implements OnInit {
 
-  loginForm = new FormGroup({
-    email: new FormControl('', {
+  // this is a way to create controls using FormControl & FormGroup directives
+  // loginForm = new FormGroup({
+  //   email: new FormControl('', {
+  //     validators: [
+  //       Validators.required,
+  //       Validators.email
+  //     ],
+  //     updateOn: 'blur'
+  //   }),
+  //   password: new FormControl('', {
+  //     validators: [
+  //       Validators.required,
+  //       Validators.minLength(6),
+  //       createPasswordStrengthValidator()
+  //     ]
+  //   })
+  // });
+
+  // this is the way to create controls using FormBuilder API
+  loginForm = this.formBuilder.group({
+    email: ['', {
       validators: [
         Validators.required,
         Validators.email
-      ]
-    }),
-    password: new FormControl('', {
-      validators: [
-        Validators.required,
-        Validators.minLength(6)
-      ]
-    })
+      ],
+      updateOn: 'blur'
+    }],
+    password: ['', [Validators.required, Validators.minLength(6), createPasswordStrengthValidator()]]
   });
 
-  constructor() {
+  constructor(private formBuilder: FormBuilder) {
 
 
   }
@@ -33,4 +49,16 @@ export class LoginReactiveComponent implements OnInit {
 
   }
 
+  login(loginForm: FormGroup, submit) {
+    console.log(loginForm.value, loginForm.valid, submit);
+  }
+
+
+  get email() {
+    return this.loginForm.controls['email'];
+  }
+
+  get password() {
+    return this.loginForm.controls['password']
+  }
 }
