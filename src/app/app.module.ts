@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {forwardRef, NgModule} from '@angular/core';
+import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -8,10 +8,10 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
-import { HomeComponent } from './home/home.component';
-import { AboutComponent } from './about/about.component';
+import {HomeComponent} from './home/home.component';
+import {AboutComponent} from './about/about.component';
 import {MatTabsModule} from '@angular/material/tabs';
-import { CoursesCardListComponent } from './courses-card-list/courses-card-list.component';
+import {CoursesCardListComponent} from './courses-card-list/courses-card-list.component';
 import {CourseComponent} from './course/course.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -31,7 +31,7 @@ import { CourseDialogComponent } from './course-dialog/course-dialog.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {LoginComponent} from './login/login.component';
 import { CreateCourseComponent } from './create-course/create-course.component';
-import {MatNativeDateModule} from '@angular/material/core';
+import {MatNativeDateModule, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {CreateCourseStep2Component} from './create-course/create-course-step-2/create-course-step-2.component';
@@ -95,7 +95,8 @@ import { OnlyOneErrorPipe } from './pipes/only-one-error.pipe';
     ],
     providers: [
         CoursesService,
-        CourseResolver
+        CourseResolver,
+        { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }
     ],
     bootstrap: [AppComponent],
     entryComponents: [CourseDialogComponent]
