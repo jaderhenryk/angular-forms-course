@@ -4,6 +4,8 @@
         <mat-radio-button value="premium">Premium</mat-radio-button>
     </mat-radio-group>
 
+    <file-upload formControlName="thumbnail" requiredFileType="image/png"></file-upload>
+
     <mat-form-field>
         <input matInput type="number" placeholder="price" formControlName="price">
     </mat-form-field>
@@ -22,6 +24,10 @@
     </mat-form-field>
 </div>
 
+<!-- <div>
+    Form Valid State: {{form.valid}}
+</div>
+
 <div>
     {{form.value | json}}
-</div>
+</div> -->
